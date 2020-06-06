@@ -1,7 +1,19 @@
-//import axios from "axios";
+import React from "react";
+
+const MovieItem = ({ data }) => {
+  console.log("data", data);
+  return (
+    <div className="movie">
+      <div>{`Title: ${data.title}`}</div>
+      <div>{`Rating: ${data.rating}`}</div>
+    </div>
+  );
+};
+
+export default MovieItem;
 
 /**
- id: 15553
+id: 15553
 url: https://yts.mx/movies/doctor-who-the-day-of-the-doctor-2013
 imdb_code: tt2779318
 title: Doctor Who The Day of the Doctor
@@ -28,48 +40,3 @@ torrents: [object Object],[object Object]
 date_uploaded: 2020-02-24 05:16:24
 date_uploaded_unix: 1582517784
  */
-
-const addMovie = (data) => {
-  const movie = document.createElement("div");
-  movie.className = "movie";
-
-  const title = document.createElement("div");
-  title.innerText = `Title: ${data.title}`;
-  movie.appendChild(title);
-
-  const rating = document.createElement("div");
-  rating.innerText = `Rating: ${data.rating}`;
-  movie.appendChild(rating);
-
-  //   Object.keys(data).forEach((key) => {
-  //     const info = document.createElement("div");
-  //     info.innerText = `${key}: ${data[key]}`;
-
-  //     movie.appendChild(info);
-  //   });
-
-  const container = document.getElementById("result-container");
-  container.appendChild(movie);
-};
-
-const aa = async () => {
-  const result = await axios.get(
-    "https://yts-proxy.now.sh/list_movies.json?sort_by=rating"
-  );
-
-  //   console.log(result.status);
-  //   console.log(result.status_message);
-  //   console.log(result.headers);
-  //   console.log(result.config);
-  //   console.log(result.data);
-  const data = result.data.data;
-  const movies = data.movies;
-
-  movies.forEach((element) => {
-    addMovie(element);
-  });
-
-  //content[0].innerHTML = JSON.stringify(result);
-};
-
-aa();

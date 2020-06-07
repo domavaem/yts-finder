@@ -1,7 +1,7 @@
 import React from "react";
 
 const MovieItem = ({ data }) => {
-  console.log("data", data);
+  //console.log("data", data);
   return (
     <div className="movie">
       <div>{`Title: ${data.title}`}</div>

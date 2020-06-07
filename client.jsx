@@ -1,13 +1,11 @@
 import React from "react";
 import ReactDom from "react-dom";
 import "regenerator-runtime/runtime"; //import regeneratorRuntime from "regenerator-runtime";
-import Header from "./Header";
-import MovieList from "./MovieList";
+import YtsFinder from "./YtsFinder";
 
 ReactDom.render(
   <>
-    <Header />
-    <MovieList />
+    <YtsFinder />
   </>,
   document.querySelector("#root")
 );

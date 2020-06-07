@@ -1,53 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import MovieItem from "./MovieItem";
 
-const MovieList = () => {
+const MovieList = ({ queryRequest, dispatch }) => {
   const [movies, setMovies] = useState([]);
 
-  const requestListMovies = async (
-    limit = 20,
-    page = null,
-    quality = null,
-    minimum_rating = null,
-    query_term = null,
-    genre = null,
-    sort_by = null,
-    order_by = null,
-    with_rt_ratings = null
-  ) => {
-    let queryString = "";
-    if (limit) queryString += `limit=${limit}`;
-    if (page) queryString += `&page=${page}`;
-    if (quality) queryString += `&page=${quality}`;
-    if (minimum_rating) queryString += `&page=${minimum_rating}`;
-    if (query_term) queryString += `&page=${query_term}`;
-    if (genre) queryString += `&page=${genre}`;
-    if (sort_by) queryString += `&sort_by=${sort_by}`;
-    if (order_by) queryString += `&order_by=${order_by}`;
-    if (with_rt_ratings) queryString += `&page=${with_rt_ratings}`;
-    console.log("> Query String: " + queryString);
+  const requestListMovies = useCallback(async () => {
+    console.log("> Request: " + queryRequest);
 
     try {
-      const result = await axios.get(
-        "https://yts-proxy.now.sh/list_movies.json?" + queryString
-      );
-
+      const result = await axios.get(queryRequest);
       const data = result.data.data;
       setMovies(data.movies);
     } catch (e) {
       console.error(e);
     }
-  };
+  });
 
   useEffect(() => {
     requestListMovies();
-  }, []);
+  }, [queryRequest]);
 
   return (
     <>
       <div id="result-container">
         {movies.map((item) => {
+          // console.log("item: " + item);
+          // console.log("id: " + toString(item.id));
           return <MovieItem key={item.id.toString()} data={item} />;
         })}
       </div>

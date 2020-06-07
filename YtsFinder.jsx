@@ -1,14 +1,17 @@
 import React, { useReducer } from "react";
 import Header from "./Header";
 import MovieList from "./MovieList";
+import DialogMovie from "./components/DialogMovie";
 
 const queryDefault = "https://yts-proxy.now.sh/list_movies.json";
 
 const initialState = {
   queryRequest: queryDefault,
+  dialogMovieData: null,
 };
 
 export const SET_OPTION_REQUEST = "SET_OPTION_REQUEST";
+export const SHOW_MOVIE_DIALOG = "SHOW_MOVIE_DIALOG";
 
 const getQuery = (currentQuery, data) => {
   const temp = currentQuery.split("?");
@@ -48,6 +51,9 @@ const reducer = (state, action) => {
         ...state,
         queryRequest: queryRequest,
       };
+
+    case SHOW_MOVIE_DIALOG:
+      return { ...state, dialogMovieData: action.data };
     default:
       return state;
   }
@@ -55,12 +61,13 @@ const reducer = (state, action) => {
 
 const YtsFinder = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { queryRequest } = state;
+  const { queryRequest, dialogMovieData } = state;
 
   return (
     <>
       <Header dispatch={dispatch} />
       <MovieList queryRequest={queryRequest} dispatch={dispatch} />
+      {dialogMovieData && <DialogMovie data={dialogMovieData} />}
     </>
   );
 };

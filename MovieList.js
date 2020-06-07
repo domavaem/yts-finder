@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import MovieItem from "./MovieItem";
+import { SHOW_MOVIE_DIALOG } from "./YtsFinder";
 
 const MovieList = ({ queryRequest, dispatch }) => {
   const [movies, setMovies] = useState([]);
@@ -21,14 +22,28 @@ const MovieList = ({ queryRequest, dispatch }) => {
     requestListMovies();
   }, [queryRequest]);
 
+  const onClickItem = (e) => {
+    const data = e.currentTarget.getAttribute("data");
+
+    dispatch({
+      type: SHOW_MOVIE_DIALOG,
+      data: JSON.parse(data),
+    });
+  };
+
   return (
     <>
       <div id="result-container">
-        {movies.map((item) => {
-          // console.log("item: " + item);
-          // console.log("id: " + toString(item.id));
-          return <MovieItem key={item.id.toString()} data={item} />;
-        })}
+        {movies &&
+          movies.map((item) => {
+            return (
+              <MovieItem
+                key={item.id.toString()}
+                data={item}
+                onClickEvent={onClickItem}
+              />
+            );
+          })}
       </div>
     </>
   );

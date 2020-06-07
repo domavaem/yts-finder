@@ -1,9 +1,9 @@
 import React from "react";
 
-const MovieItem = ({ data }) => {
+const MovieItem = ({ data, onClickEvent }) => {
   //console.log("data", data);
   return (
-    <div className="movie">
+    <div className="movie" onClick={onClickEvent} data={JSON.stringify(data)}>
       <div>{`Title: ${data.title}`}</div>
       <div>{`Rating: ${data.rating}`}</div>
     </div>

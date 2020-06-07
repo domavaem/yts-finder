@@ -30,6 +30,33 @@ const Header = ({ dispatch }) => {
       type: SET_OPTION_REQUEST,
       data: { queryOption: query_option, optionValue: option_value },
     });
+
+    switch (query_option) {
+      case "quality":
+        setQuality();
+        break;
+      case "minimum_rating":
+        setMinimumRating();
+        break;
+      case "query_term":
+        setQueryTerm();
+        break;
+      case "genre":
+        setGenre();
+        break;
+      case "sort_by":
+        setSortBy();
+        break;
+      case "order_by":
+        setOrderBy();
+        break;
+      case "with_rt_ratings":
+        setWithRtRatings();
+        break;
+
+      default:
+        break;
+    }
   };
 
   const menuQuality = ["720p", "1080p", "2160p", "3D"];

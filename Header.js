@@ -23,14 +23,7 @@ const Header = ({ dispatch }) => {
     dispatch({ type: SET_OPTION_REQUEST, data: { init: true } });
   };
 
-  const onClickOption = (e) => {
-    const query_option = e.target.getAttribute("query_option");
-    const option_value = e.target.getAttribute("option_value");
-    dispatch({
-      type: SET_OPTION_REQUEST,
-      data: { queryOption: query_option, optionValue: option_value },
-    });
-
+  const updateClick = (query_option) => {
     switch (query_option) {
       case "quality":
         setQuality();
@@ -59,6 +52,22 @@ const Header = ({ dispatch }) => {
     }
   };
 
+  const onClickClose = (e) => {
+    const query_option = e.target.getAttribute("query_option");
+    updateClick(query_option);
+  };
+
+  const onClickOption = (e) => {
+    const query_option = e.target.getAttribute("query_option");
+    const option_value = e.target.getAttribute("option_value");
+    dispatch({
+      type: SET_OPTION_REQUEST,
+      data: { queryOption: query_option, optionValue: option_value },
+    });
+
+    updateClick(query_option);
+  };
+
   const menuQuality = ["720p", "1080p", "2160p", "3D"];
   const menuMinimumRating = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
   const menuQueryTerm = ["temp", "temp2", "temp3"];
@@ -79,22 +88,16 @@ const Header = ({ dispatch }) => {
   return (
     <>
       <div className="header">
-        <div>YTS Finder</div>
-        <button className="find" onClick={onClickInitFind}>
-          검색 초기화
-        </button>
+        <div className="brand">
+          <div>YTS</div>
+          <div>Finder</div>
+        </div>
+        <div className="find">
+          <button onClick={onClickInitFind}>검색 초기화</button>
+        </div>
       </div>
 
       <div className="request-option-bar">
-        <button className="request-option" onClick={setQuality}>
-          해상도quality
-        </button>
-        <button className="request-option" onClick={setMinimumRating}>
-          최소 n평점 이상minimum_rating
-        </button>
-        <button className="request-option" onClick={setQueryTerm}>
-          검색query_term
-        </button>
         <button className="request-option" onClick={setGenre}>
           장르genre
         </button>
@@ -104,8 +107,17 @@ const Header = ({ dispatch }) => {
         <button className="request-option" onClick={setOrderBy}>
           정렬순서order_by
         </button>
+        <button className="request-option" onClick={setMinimumRating}>
+          최소 n평점 이상minimum_rating
+        </button>
+        <button className="request-option" onClick={setQuality}>
+          해상도quality
+        </button>
         <button className="request-option" onClick={setWithRtRatings}>
           로튼토마토 순위with_rt_ratings
+        </button>
+        <button className="request-option query-term" onClick={setQueryTerm}>
+          검색query_term
         </button>
       </div>
 
@@ -115,6 +127,7 @@ const Header = ({ dispatch }) => {
         queryOption="quality"
         optionList={menuQuality}
         onClickEvent={onClickOption}
+        onClickClose={onClickClose}
       />
       <DialogOption
         id="dialogMinimumRating"
@@ -122,6 +135,7 @@ const Header = ({ dispatch }) => {
         queryOption="minimum_rating"
         optionList={menuMinimumRating}
         onClickEvent={onClickOption}
+        onClickClose={onClickClose}
       />
       <DialogOption
         id="dialogQueryTerm"
@@ -129,6 +143,7 @@ const Header = ({ dispatch }) => {
         queryOption="query_term"
         optionList={menuQueryTerm}
         onClickEvent={onClickOption}
+        onClickClose={onClickClose}
       />
       <DialogOption
         id="dialogGenre"
@@ -136,6 +151,7 @@ const Header = ({ dispatch }) => {
         queryOption="genre"
         optionList={menuGenre}
         onClickEvent={onClickOption}
+        onClickClose={onClickClose}
       />
       <DialogOption
         id="dialogSortBy"
@@ -143,6 +159,7 @@ const Header = ({ dispatch }) => {
         queryOption="sort_by"
         optionList={menuSortBy}
         onClickEvent={onClickOption}
+        onClickClose={onClickClose}
       />
       <DialogOption
         id="dialogOrderBy"
@@ -150,6 +167,7 @@ const Header = ({ dispatch }) => {
         queryOption="order_by"
         optionList={menuOrderBy}
         onClickEvent={onClickOption}
+        onClickClose={onClickClose}
       />
       <DialogOption
         id="dialogWithRtRatings"
@@ -157,6 +175,7 @@ const Header = ({ dispatch }) => {
         queryOption="with_rt_ratings"
         optionList={menuWithRtRatings}
         onClickEvent={onClickOption}
+        onClickClose={onClickClose}
       />
     </>
   );

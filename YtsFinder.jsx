@@ -12,6 +12,7 @@ const initialState = {
 
 export const SET_OPTION_REQUEST = "SET_OPTION_REQUEST";
 export const SHOW_MOVIE_DIALOG = "SHOW_MOVIE_DIALOG";
+export const HIDE_MOVIE_DIALOG = "HIDE_MOVIE_DIALOG";
 
 const getQuery = (currentQuery, data) => {
   const temp = currentQuery.split("?");
@@ -54,6 +55,10 @@ const reducer = (state, action) => {
 
     case SHOW_MOVIE_DIALOG:
       return { ...state, dialogMovieData: action.data };
+
+    case HIDE_MOVIE_DIALOG:
+      return { ...state, dialogMovieData: null };
+
     default:
       return state;
   }
@@ -67,7 +72,9 @@ const YtsFinder = () => {
     <>
       <Header dispatch={dispatch} />
       <MovieList queryRequest={queryRequest} dispatch={dispatch} />
-      {dialogMovieData && <DialogMovie data={dialogMovieData} />}
+      {dialogMovieData && (
+        <DialogMovie data={dialogMovieData} dispatch={dispatch} />
+      )}
     </>
   );
 };

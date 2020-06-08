@@ -66,12 +66,17 @@
 }
 
 #result-container {
-  margin: 1em 1em;
+  margin: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 .movie {
   margin-bottom: 1em;
   background-color: aqua;
+  width: 90%;
+  height: 20vh;
 }
 
 @media (min-width: 600px) {
@@ -79,6 +84,10 @@
     font-size: 1.5rem;
     width: 30%;
     flex-grow: 1;
+  }
+
+  .movie {
+    width: 45%;
   }
 }
 
@@ -94,6 +103,10 @@
     font-size: 1.5rem;
     width: 100%;
     flex-grow: 1;
+  }
+
+  .movie {
+    width: 30%;
   }
 }
 

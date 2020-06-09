@@ -96,7 +96,7 @@ const YtsFinder = () => {
   return (
     <>
       <Header dispatch={dispatch} />
-      <RequestedQuery requestQuery={requestQuery} />
+      <RequestedQuery requestQuery={requestQuery} dispatch={dispatch} />
       <MovieList requestUrl={requestUrl} dispatch={dispatch} />
       {dialogMovieData && (
         <DialogMovie data={dialogMovieData} dispatch={dispatch} />

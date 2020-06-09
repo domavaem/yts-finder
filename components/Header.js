@@ -19,10 +19,6 @@ const Header = ({ dispatch }) => {
   const [orderBy, setOrderBy] = useClick(true);
   const [withRtRatings, setWithRtRatings] = useClick(true);
 
-  const onClickInitFind = () => {
-    dispatch({ type: SET_OPTION_REQUEST, data: { init: true } });
-  };
-
   const updateClick = (query_option) => {
     switch (query_option) {
       case "quality":
@@ -91,9 +87,6 @@ const Header = ({ dispatch }) => {
         <div className="brand">
           <div>YTS</div>
           <div>Finder</div>
-        </div>
-        <div className="find">
-          <button onClick={onClickInitFind}>검색 초기화</button>
         </div>
       </div>
 

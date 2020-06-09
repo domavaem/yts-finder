@@ -18,20 +18,6 @@
   flex-shrink: 1;
 }
 
-.find {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-}
-.find button {
-  font-size: 1rem;
-  padding: 0.5em;
-  margin: 1em;
-  color: white;
-  background-color: darkgrey;
-  border-radius: 10px;
-}
 .request-option-bar {
   display: flex;
   flex-wrap: wrap;
@@ -83,6 +69,10 @@
   align-items: baseline;
 }
 
+.requested-query.clickable {
+  cursor: pointer;
+}
+
 .requested-query-key {
   font-size: 1rem;
   margin-right: 0.2em;
@@ -90,6 +80,16 @@
 
 .requested-query-value {
   font-size: 2rem;
+}
+
+.requested-query.init-query {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: darkgrey;
+}
+.requested-query.init-query div {
+  font-size: 1.2em;
 }
 
 #result-container {

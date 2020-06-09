@@ -3,14 +3,15 @@ import axios from "axios";
 import MovieItem from "./MovieItem";
 import { SHOW_MOVIE_DIALOG } from "./YtsFinder";
 
-const MovieList = ({ queryRequest, dispatch }) => {
+const MovieList = ({ requestUrl, dispatch }) => {
   const [movies, setMovies] = useState([]);
 
   const requestListMovies = useCallback(async () => {
-    console.log("> Request: " + queryRequest);
+    console.log("> Request: " + requestUrl);
+    setMovies(null);
 
     try {
-      const result = await axios.get(queryRequest);
+      const result = await axios.get(requestUrl);
       const data = result.data.data;
       setMovies(data.movies);
     } catch (e) {
@@ -20,7 +21,7 @@ const MovieList = ({ queryRequest, dispatch }) => {
 
   useEffect(() => {
     requestListMovies();
-  }, [queryRequest]);
+  }, [requestUrl]);
 
   const onClickItem = (e) => {
     const data = e.currentTarget.getAttribute("data");

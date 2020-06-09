@@ -99,25 +99,25 @@ const Header = ({ dispatch }) => {
 
       <div className="request-option-bar">
         <button className="request-option" onClick={setGenre}>
-          장르genre
+          장르
         </button>
         <button className="request-option" onClick={setSortBy}>
-          정렬sort_by
+          정렬 기준
         </button>
         <button className="request-option" onClick={setOrderBy}>
-          정렬순서order_by
+          정렬 순서
         </button>
         <button className="request-option" onClick={setMinimumRating}>
-          최소 n평점 이상minimum_rating
+          최소 평점
         </button>
         <button className="request-option" onClick={setQuality}>
-          해상도quality
+          해상도
         </button>
         <button className="request-option" onClick={setWithRtRatings}>
-          로튼토마토 순위with_rt_ratings
+          로튼토마토 평점 여부
         </button>
         <button className="request-option query-term" onClick={setQueryTerm}>
-          검색query_term
+          검색
         </button>
       </div>
 

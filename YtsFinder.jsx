@@ -3,10 +3,10 @@ import Header from "./Header";
 import MovieList from "./MovieList";
 import DialogMovie from "./components/DialogMovie";
 
-const queryDefault = "https://yts-proxy.now.sh/list_movies.json";
+const DEFAULT_QUERY = "https://yts-proxy.now.sh/list_movies.json";
 
 const initialState = {
-  queryRequest: queryDefault,
+  requestUrl: DEFAULT_QUERY,
   dialogMovieData: null,
 };
 
@@ -16,7 +16,6 @@ export const HIDE_MOVIE_DIALOG = "HIDE_MOVIE_DIALOG";
 
 const getQuery = (currentQuery, data) => {
   const temp = currentQuery.split("?");
-  const baseUrl = temp[0];
   const query = temp[1];
   let queryUrl = "";
   if (query) {
@@ -33,24 +32,23 @@ const getQuery = (currentQuery, data) => {
 
   queryUrl += data.queryOption + "=" + data.optionValue;
 
-  //encodeURIComponent 검색어 인코딩 할 때 사용해야 함.
-
-  return baseUrl + "?" + queryUrl;
+  return queryUrl;
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
     case SET_OPTION_REQUEST:
-      let queryRequest = null;
+      let requestUrl = null;
       if (!action.data.init) {
-        queryRequest = getQuery(state.queryRequest, action.data);
+        const newQuery = getQuery(state.requestUrl, action.data);
+        requestUrl = DEFAULT_QUERY + "?" + newQuery;
       } else {
-        queryRequest = queryDefault;
+        requestUrl = DEFAULT_QUERY;
       }
 
       return {
         ...state,
-        queryRequest: queryRequest,
+        requestUrl: requestUrl,
       };
 
     case SHOW_MOVIE_DIALOG:
@@ -66,12 +64,12 @@ const reducer = (state, action) => {
 
 const YtsFinder = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { queryRequest, dialogMovieData } = state;
+  const { requestUrl, dialogMovieData } = state;
 
   return (
     <>
       <Header dispatch={dispatch} />
-      <MovieList queryRequest={queryRequest} dispatch={dispatch} />
+      <MovieList requestUrl={requestUrl} dispatch={dispatch} />
       {dialogMovieData && (
         <DialogMovie data={dialogMovieData} dispatch={dispatch} />
       )}

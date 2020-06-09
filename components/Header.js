@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import DialogOption from "./DialogOption";
-import { SET_OPTION_REQUEST } from "../page/YtsFinder";
+import { ADD_QUERY_PARAM } from "../page/YtsFinder";
 
 const Header = ({ dispatch }) => {
   const useClick = (initValue = true) => {
@@ -57,8 +57,8 @@ const Header = ({ dispatch }) => {
     const query_option = e.target.getAttribute("query_option");
     const option_value = e.target.getAttribute("option_value");
     dispatch({
-      type: SET_OPTION_REQUEST,
-      data: { queryOption: query_option, optionValue: option_value },
+      type: ADD_QUERY_PARAM,
+      addParam: { key: query_option, value: option_value },
     });
 
     updateClick(query_option);

@@ -12,7 +12,9 @@ const initialState = {
   dialogMovieData: null,
 };
 
-export const SET_OPTION_REQUEST = "SET_OPTION_REQUEST";
+export const INIT_QUERY = "INIT_QUERY";
+export const ADD_QUERY_PARAM = "ADD_QUERY_PARAM";
+export const DELETE_QUERY_PARAM = "DELETE_QUERY_PARAM";
 export const LOAD_MOVIES = "LOAD_MOVIES";
 export const SHOW_MOVIE_DIALOG = "SHOW_MOVIE_DIALOG";
 export const HIDE_MOVIE_DIALOG = "HIDE_MOVIE_DIALOG";
@@ -45,26 +47,35 @@ const queryParamsToString = (params) => {
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case SET_OPTION_REQUEST: {
-      let requestUrl = null;
-      let requestQuery = null;
-      if (!action.data.init) {
-        const params = getQueryParams(state.requestUrl);
-        delete params.page;
-        params[action.data.queryOption] = action.data.optionValue;
-
-        requestQuery = params;
-        requestUrl = DEFAULT_QUERY + "?" + queryParamsToString(params);
-      } else {
-        requestUrl = DEFAULT_QUERY;
-      }
+    case INIT_QUERY: {
+      return {
+        ...state,
+        requestUrl: DEFAULT_QUERY,
+        requestQuery: null,
+      };
+    }
+    case ADD_QUERY_PARAM: {
+      const params = getQueryParams(state.requestUrl);
+      delete params.page;
+      params[action.addParam.key] = action.addParam.value;
 
       return {
         ...state,
-        requestUrl: requestUrl,
-        requestQuery: requestQuery,
+        requestUrl: DEFAULT_QUERY + "?" + queryParamsToString(params),
+        requestQuery: params,
       };
     }
+    case DELETE_QUERY_PARAM: {
+      const params = getQueryParams(state.requestUrl);
+      delete params[action.deleteParamKey];
+
+      return {
+        ...state,
+        requestUrl: DEFAULT_QUERY + "?" + queryParamsToString(params),
+        requestQuery: params,
+      };
+    }
+
     case LOAD_MOVIES: {
       const params = getQueryParams(state.requestUrl);
       delete params.page;

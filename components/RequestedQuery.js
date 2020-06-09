@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { SET_OPTION_REQUEST } from "../page/YtsFinder";
+import { INIT_QUERY } from "../page/YtsFinder";
 
 const RequestedQuery = ({ requestQuery, dispatch }) => {
   let arr = [];
@@ -10,7 +10,7 @@ const RequestedQuery = ({ requestQuery, dispatch }) => {
   }
 
   const onClickInit = useCallback(() => {
-    dispatch({ type: SET_OPTION_REQUEST, data: { init: true } });
+    dispatch({ type: INIT_QUERY });
   });
 
   return (

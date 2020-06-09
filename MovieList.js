@@ -1,19 +1,41 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
 import MovieItem from "./MovieItem";
 import { SHOW_MOVIE_DIALOG } from "./YtsFinder";
+import { LOAD_MOVIES } from "./YtsFinder";
 
 const MovieList = ({ requestUrl, dispatch }) => {
   const [movies, setMovies] = useState([]);
+  const isLoadingRef = useRef(false);
+  const totalCountMoviesRef = useRef(0);
+  const currentCountMoviesRef = useRef(0);
+  const currentPageRef = useRef(1);
 
   const requestListMovies = useCallback(async () => {
     console.log("> Request: " + requestUrl);
-    setMovies(null);
+
+    if (requestUrl.includes("page") === false) {
+      setMovies(null);
+      currentPageRef.current = 1;
+    }
 
     try {
       const result = await axios.get(requestUrl);
       const data = result.data.data;
-      setMovies(data.movies);
+      totalCountMoviesRef.current = data.movie_count;
+      currentPageRef.current = data.page_number;
+
+      if (currentPageRef.current <= 1) {
+        setMovies(data.movies);
+        currentCountMoviesRef.current = data.movies.length;
+      } else {
+        const preMovies = [...movies];
+        const newMovies = preMovies.concat(data.movies);
+        setMovies(newMovies);
+        currentCountMoviesRef.current += data.movies.length;
+      }
+
+      isLoadingRef.current = false;
     } catch (e) {
       console.error(e);
     }
@@ -31,6 +53,37 @@ const MovieList = ({ requestUrl, dispatch }) => {
       data: JSON.parse(data),
     });
   };
+
+  const onScroll = useCallback(() => {
+    if (
+      window.scrollY + document.documentElement.clientHeight >
+      document.documentElement.scrollHeight - 300
+    ) {
+      if (currentCountMoviesRef.current >= totalCountMoviesRef.current) return;
+      if (isLoadingRef.current === true) return;
+
+      isLoadingRef.current = true;
+      dispatch({
+        type: LOAD_MOVIES,
+        requestPage: currentPageRef.current + 1,
+      });
+    }
+  }, [
+    currentCountMoviesRef.current,
+    totalCountMoviesRef.current,
+    currentPageRef.current,
+    isLoadingRef.current,
+  ]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", onScroll);
+    console.log("addEventListener");
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      console.log("removeEventListener");
+    };
+  }, [currentPageRef.current]);
 
   return (
     <>

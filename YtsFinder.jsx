@@ -13,45 +13,48 @@ const initialState = {
 };
 
 export const SET_OPTION_REQUEST = "SET_OPTION_REQUEST";
+export const LOAD_MOVIES = "LOAD_MOVIES";
 export const SHOW_MOVIE_DIALOG = "SHOW_MOVIE_DIALOG";
 export const HIDE_MOVIE_DIALOG = "HIDE_MOVIE_DIALOG";
 
-const getQueryInfo = (currentQuery, data) => {
-  const temp = currentQuery.split("?");
+const getQueryParams = (url) => {
+  const temp = url.split("?");
   const query = temp[1];
-  let queryUrl = "";
-  let queryData = {};
+
+  let result = {};
   if (query) {
     const queryArray = query.split("&");
     queryArray.forEach((q) => {
-      const queryInfo = q.split("=");
-      const queryName = queryInfo[0];
-      const queryValue = queryInfo[1];
-      if (queryName !== data.queryOption) {
-        queryUrl += queryName + "=" + queryValue + "&";
-        queryData[queryName] = queryValue;
-      }
+      const param = q.split("=");
+      result[param[0]] = param[1];
     });
   }
 
-  queryUrl += data.queryOption + "=" + data.optionValue;
-  queryData[data.queryOption] = data.optionValue;
+  return result;
+};
 
-  return { queryUrl, queryData };
+const queryParamsToString = (params) => {
+  let queryUrl = "";
+  Object.keys(params).forEach((v, i) => {
+    if (i > 0) queryUrl += "&";
+    queryUrl += v + "=" + params[v];
+  });
+
+  return queryUrl;
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case SET_OPTION_REQUEST:
+    case SET_OPTION_REQUEST: {
       let requestUrl = null;
       let requestQuery = null;
       if (!action.data.init) {
-        const { queryUrl, queryData } = getQueryInfo(
-          state.requestUrl,
-          action.data
-        );
-        requestQuery = queryData;
-        requestUrl = DEFAULT_QUERY + "?" + queryUrl;
+        const params = getQueryParams(state.requestUrl);
+        delete params.page;
+        params[action.data.queryOption] = action.data.optionValue;
+
+        requestQuery = params;
+        requestUrl = DEFAULT_QUERY + "?" + queryParamsToString(params);
       } else {
         requestUrl = DEFAULT_QUERY;
       }
@@ -61,12 +64,25 @@ const reducer = (state, action) => {
         requestUrl: requestUrl,
         requestQuery: requestQuery,
       };
+    }
+    case LOAD_MOVIES: {
+      const params = getQueryParams(state.requestUrl);
+      delete params.page;
+      params["page"] = action.requestPage;
 
-    case SHOW_MOVIE_DIALOG:
+      return {
+        ...state,
+        requestUrl: DEFAULT_QUERY + "?" + queryParamsToString(params),
+      };
+    }
+
+    case SHOW_MOVIE_DIALOG: {
       return { ...state, dialogMovieData: action.data };
+    }
 
-    case HIDE_MOVIE_DIALOG:
+    case HIDE_MOVIE_DIALOG: {
       return { ...state, dialogMovieData: null };
+    }
 
     default:
       return state;

@@ -1,5 +1,5 @@
 import React from "react";
-import { HIDE_MOVIE_DIALOG } from "../YtsFinder";
+import { HIDE_MOVIE_DIALOG } from "../page/YtsFinder";
 
 const DialogMovie = ({ data, dispatch }) => {
   const onClickClose = (e) => {

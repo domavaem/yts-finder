@@ -1,8 +1,8 @@
 import React, { useReducer } from "react";
-import Header from "./Header";
-import MovieList from "./MovieList";
-import DialogMovie from "./components/DialogMovie";
-import RequestedQuery from "./components/RequestedQuery";
+import Header from "../components/Header";
+import MovieList from "../components/MovieList";
+import DialogMovie from "../components/DialogMovie";
+import RequestedQuery from "../components/RequestedQuery";
 
 const DEFAULT_QUERY = "https://yts-proxy.now.sh/list_movies.json";
 

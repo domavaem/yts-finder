@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
-import DialogOption from "./components/DialogOption";
-import { SET_OPTION_REQUEST } from "./YtsFinder";
+import DialogOption from "./DialogOption";
+import { SET_OPTION_REQUEST } from "../page/YtsFinder";
 
 const Header = ({ dispatch }) => {
   const useClick = (initValue = true) => {

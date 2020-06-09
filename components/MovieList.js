@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
 import MovieItem from "./MovieItem";
-import { SHOW_MOVIE_DIALOG } from "./YtsFinder";
-import { LOAD_MOVIES } from "./YtsFinder";
+import { SHOW_MOVIE_DIALOG } from "../page/YtsFinder";
+import { LOAD_MOVIES } from "../page/YtsFinder";
 
 const MovieList = ({ requestUrl, dispatch }) => {
   const [movies, setMovies] = useState([]);

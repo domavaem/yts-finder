@@ -6,6 +6,7 @@ import { LOAD_MOVIES } from "./YtsFinder";
 
 const MovieList = ({ requestUrl, dispatch }) => {
   const [movies, setMovies] = useState([]);
+  const [showLoading, setShowLoading] = useState(false);
   const isLoadingRef = useRef(false);
   const totalCountMoviesRef = useRef(0);
   const currentCountMoviesRef = useRef(0);
@@ -18,6 +19,8 @@ const MovieList = ({ requestUrl, dispatch }) => {
       setMovies(null);
       currentPageRef.current = 1;
     }
+
+    setShowLoading(true);
 
     try {
       const result = await axios.get(requestUrl);
@@ -39,6 +42,8 @@ const MovieList = ({ requestUrl, dispatch }) => {
     } catch (e) {
       console.error(e);
     }
+
+    setShowLoading(false);
   });
 
   useEffect(() => {
@@ -77,11 +82,9 @@ const MovieList = ({ requestUrl, dispatch }) => {
 
   useEffect(() => {
     window.addEventListener("scroll", onScroll);
-    console.log("addEventListener");
 
     return () => {
       window.removeEventListener("scroll", onScroll);
-      console.log("removeEventListener");
     };
   }, [currentPageRef.current]);
 
@@ -99,6 +102,7 @@ const MovieList = ({ requestUrl, dispatch }) => {
             );
           })}
       </div>
+      {showLoading && <div className="indicatorLoading">Loading...</div>}
     </>
   );
 };

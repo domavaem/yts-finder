@@ -65,6 +65,33 @@
   font-size: 1rem;
 }
 
+.requested-query-container {
+  margin: 1em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.requested-query {
+  font-size: 1.5rem;
+  padding: 0.1em 0.5em;
+  margin: 0.2em 0.3em;
+  background-color: seagreen;
+  color: white;
+  border-radius: 5px;
+  display: flex;
+  align-items: baseline;
+}
+
+.requested-query-key {
+  font-size: 1rem;
+  margin-right: 0.2em;
+}
+
+.requested-query-value {
+  font-size: 2rem;
+}
+
 #result-container {
   margin: 0.5rem;
   display: flex;

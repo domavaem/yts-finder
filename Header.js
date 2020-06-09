@@ -113,12 +113,12 @@ const Header = ({ dispatch }) => {
         <button className="request-option" onClick={setQuality}>
           해상도
         </button>
-        <button className="request-option" onClick={setWithRtRatings}>
+        {/* <button className="request-option" onClick={setWithRtRatings}>
           로튼토마토 평점 여부
         </button>
         <button className="request-option query-term" onClick={setQueryTerm}>
           검색
-        </button>
+        </button> */}
       </div>
 
       <DialogOption

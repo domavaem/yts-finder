@@ -1,4 +1,5 @@
 import React from "react";
+import { transToUIString } from "../util/helper";
 
 const DialogOption = ({
   queryOption,
@@ -17,6 +18,7 @@ const DialogOption = ({
       onClick={onClickClose}
     >
       <div className="modal-content">
+        <div className="query-param-key">{transToUIString(queryOption)}</div>
         {optionList.map((item, i) => {
           return (
             <div
@@ -24,8 +26,9 @@ const DialogOption = ({
               query_option={queryOption}
               option_value={item}
               onClick={onClickEvent}
+              className="query-param-value"
             >
-              {item}
+              {transToUIString(item)}
             </div>
           );
         })}

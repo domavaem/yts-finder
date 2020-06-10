@@ -1,5 +1,6 @@
 import React, { useCallback } from "react";
 import { INIT_QUERY, DELETE_QUERY_PARAM } from "../page/YtsFinder";
+import { transToUIString } from "../util/helper";
 
 const RequestedQuery = ({ requestQuery, dispatch }) => {
   let arr = [];
@@ -31,8 +32,10 @@ const RequestedQuery = ({ requestQuery, dispatch }) => {
               onClick={onClickQueryParam}
               param_key={v[0]}
             >
-              <div className="requested-query-key">{v[0]}</div>
-              <div className="requested-query-value">{v[1]}</div>
+              <div className="requested-query-key">{transToUIString(v[0])}</div>
+              <div className="requested-query-value">
+                {transToUIString(v[1])}
+              </div>
             </div>
           );
         })

@@ -67,7 +67,33 @@ const Header = ({ dispatch }) => {
   const menuQuality = ["720p", "1080p", "2160p", "3D"];
   const menuMinimumRating = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
   const menuQueryTerm = ["temp", "temp2", "temp3"];
-  const menuGenre = ["genre", "genre2", "genre3"];
+  const menuGenre = [
+    "Action",
+    "Adventure",
+    "Animation",
+    "Biography",
+    "Comedy",
+    "Crime",
+    "Documentary",
+    "Drama",
+    "Family",
+    "Fantasy",
+    "Film Noir",
+    "History",
+    "Horror",
+    "Music",
+    "Musical",
+    "Mystery",
+    "Romance",
+    "Sci-Fi",
+    "Short",
+    "Sport",
+    "Superhero",
+    "Thriller",
+    "War",
+    "Western",
+  ];
+
   const menuSortBy = [
     "title",
     "year",

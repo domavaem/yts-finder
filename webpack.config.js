@@ -2,8 +2,8 @@ const path = require("path");
 
 module.exports = {
   name: "yts-finder",
-  mode: "development",
-  devtool: "eval",
+  mode: "development", // development/production
+  devtool: "eval", // eval/hidden-source-map
   entry: {
     app: ["./client"],
   },
@@ -23,7 +23,7 @@ module.exports = {
         options: {
           presets: ["@babel/preset-env", "@babel/preset-react"],
           plugins: ["@babel/plugin-proposal-class-properties"],
-          //compact: true,
+          compact: true,
         },
       },
     ],

@@ -12,18 +12,32 @@ const DialogMovie = ({ data, dispatch }) => {
     e.stopPropagation();
   };
 
+  let genres = "";
+  data.genres.forEach((v, i) => {
+    if (i != 0) genres += ", ";
+    genres += v;
+  });
+
   return (
     <div style={{ display: "block" }} className="modal" onClick={onClickClose}>
-      <div className="modal-content" onClick={onClickContent}>
-        <div>{data.title}</div>
-        <div>{data.rating}</div>
-        <div>{data.url}</div>
-        <div>{data.year}</div>
-        <div>{data.runtime}</div>
-        <div>{data.genres}</div>
-        <div>{data.description_full}</div>
-        <div>{data.large_cover_image}</div>
-        <div>{data.date_uploaded}</div>
+      <div className="modal-content movie-detail" onClick={onClickContent}>
+        <div className="movie-detail-1">
+          <img src={`${data.medium_cover_image}`}></img>
+          <h2>★{data.rating}</h2>
+          <h4>Runtime {data.runtime}m</h4>
+        </div>
+        <div className="movie-detail-2">
+          <h1>{`${data.title}`}</h1>
+          <h2>{`${data.year}`}</h2>
+          <h3>{genres}</h3>
+          <p>{`${data.description_full}`}</p>
+          <h3>
+            <a href={data.url} target="_blank">
+              YTS Link
+            </a>
+          </h3>
+          <h4>Date uploaded {data.date_uploaded}</h4>
+        </div>
       </div>
     </div>
   );

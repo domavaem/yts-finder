@@ -67,12 +67,18 @@ const reducer = (state, action) => {
     }
     case DELETE_QUERY_PARAM: {
       const params = getQueryParams(state.requestUrl);
+      delete params.page;
       delete params[action.deleteParamKey];
+
+      const isEmptyQuery =
+        Object.keys(params).length === 0 && params.constructor === Object;
 
       return {
         ...state,
-        requestUrl: DEFAULT_QUERY + "?" + queryParamsToString(params),
-        requestQuery: params,
+        requestUrl: isEmptyQuery
+          ? DEFAULT_QUERY
+          : DEFAULT_QUERY + "?" + queryParamsToString(params),
+        requestQuery: isEmptyQuery ? null : params,
       };
     }
 
